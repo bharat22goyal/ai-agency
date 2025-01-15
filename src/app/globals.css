@@ -3,19 +3,103 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 3, 0, 20;
+  --background-end-rgb: 10, 10, 42;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Base Styles */
+html {
+  @apply antialiased;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-start-rgb));
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+main {
+  @apply relative z-10;
+  min-height: calc(100vh - 4rem); /* Subtract nav height */
+}
+
+/* Navigation Styles */
+.nav-link {
+  @apply text-gray-300 relative text-sm font-medium transition-colors duration-200;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(to right, rgba(139, 92, 246, 1), rgba(99, 102, 241, 1));
+  transition: width 0.2s ease;
+}
+
+.nav-link:hover {
+  @apply text-white;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.contact-button {
+  @apply rounded-lg bg-violet-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-violet-500/30 hover:bg-violet-500 hover:shadow-violet-400/30 transition-all duration-300;
+}
+
+/* Background Effects */
+.bg-grid {
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, rgba(139, 92, 246, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(139, 92, 246, 0.1) 1px, transparent 1px);
+  mask-image: radial-gradient(ellipse at center, black 50%, transparent 80%);
+}
+
+.bg-glow {
+  background: radial-gradient(circle at center, 
+    rgba(139, 92, 246, 0.2) 0%,
+    rgba(99, 102, 241, 0.1) 25%,
+    transparent 70%);
+  filter: blur(40px);
+}
+
+.cyber-lines {
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(139, 92, 246, 0.1),
+    rgba(139, 92, 246, 0.1) 1px,
+    transparent 1px,
+    transparent 30px
+  );
+  background-size: 100% 100%;
+  animation: moveLines 20s linear infinite;
+}
+
+@keyframes moveLines {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(30px);
+  }
+}
+
+/* Card Styles */
+.cyber-card {
+  @apply p-6 rounded-2xl relative overflow-hidden backdrop-blur-sm;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(67, 56, 202, 0.05));
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  transition: all 0.3s ease;
+}
+
+.cyber-card:hover {
+  border-color: rgba(139, 92, 246, 0.3);
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.1);
 }
