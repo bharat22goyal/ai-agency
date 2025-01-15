@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import Footer from '@/components/Footer'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
+import { XMarkIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 
 type BlogPost = {
   id: string
@@ -20,15 +21,29 @@ type BlogPost = {
   updatedAt: string
 }
 
+const POSTS_PER_PAGE = 5
+
 export default function BlogContent() {
   const [posts, setPosts] = useState<BlogPost[]>([])
-  const [expandedPost, setExpandedPost] = useState<string | null>(null)
+  const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
     fetchPosts()
   }, [])
+
+  useEffect(() => {
+    if (selectedPost) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [selectedPost])
 
   const fetchPosts = async () => {
     try {
@@ -50,6 +65,12 @@ export default function BlogContent() {
       setLoading(false)
     }
   }
+
+  const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE)
+  const paginatedPosts = posts.slice(
+    (currentPage - 1) * POSTS_PER_PAGE,
+    currentPage * POSTS_PER_PAGE
+  )
 
   if (loading) {
     return (
@@ -97,25 +118,17 @@ export default function BlogContent() {
             </p>
           </motion.div>
           
-          <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-            {posts.map((post, index) => (
+          <div className="mx-auto mt-16 max-w-3xl">
+            {paginatedPosts.map((post, index) => (
               <motion.article
                 key={post.id}
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="cyber-card flex flex-col"
+                className="cyber-card mb-6 p-6 cursor-pointer hover:bg-gray-800/50 transition-colors"
+                onClick={() => setSelectedPost(post)}
               >
-                {post.image && (
-                  <div className="relative w-full h-48 mb-6 rounded-lg overflow-hidden">
-                    <img
-                      src={post.image}
-                      alt={post.title}
-                      className="object-cover w-full h-full"
-                    />
-                  </div>
-                )}
-                <div className="flex items-center gap-x-4 text-xs">
+                <div className="flex items-center gap-x-4 text-xs mb-4">
                   <time dateTime={new Date(post.createdAt).toISOString()} className="text-gray-400">
                     {new Date(post.createdAt).toLocaleDateString('en-US', {
                       year: 'numeric',
@@ -130,51 +143,140 @@ export default function BlogContent() {
                     <span className="text-gray-400">{post.readingTime}</span>
                   )}
                 </div>
-                <div className="group relative mt-4">
-                  <h3 className="text-lg font-semibold leading-6 text-white">
-                    {post.title}
-                  </h3>
-                  <p className="mt-4 text-sm leading-6 text-gray-300">
-                    {post.description}
-                  </p>
-                </div>
-                <div className="relative mt-8 flex items-center gap-x-4">
-                  <div className="h-10 w-10 rounded-full bg-violet-500/10 flex items-center justify-center">
+
+                <h3 className="text-xl font-semibold text-white mb-2">{post.title}</h3>
+                <p className="text-gray-300 text-sm mb-4">{post.description}</p>
+
+                <div className="flex items-center gap-x-4">
+                  <div className="h-8 w-8 rounded-full bg-violet-500/10 flex items-center justify-center">
                     <span className="text-sm font-medium text-violet-400">
                       {post.author[0]}
                     </span>
                   </div>
-                  <div className="text-sm leading-6">
-                    <p className="font-semibold text-white">
-                      {post.author}
-                    </p>
+                  <div className="text-sm">
+                    <p className="font-semibold text-white">{post.author}</p>
                     {post.authorRole && (
                       <p className="text-gray-400">{post.authorRole}</p>
                     )}
                   </div>
                 </div>
-                <button
-                  onClick={() => setExpandedPost(expandedPost === post.id ? null : post.id)}
-                  className="mt-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-violet-600 hover:bg-violet-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500"
-                >
-                  {expandedPost === post.id ? 'Show Less' : 'Read More'}
-                </button>
-                {expandedPost === post.id && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="mt-6 text-sm leading-6 text-gray-300 whitespace-pre-line"
-                  >
-                    {post.content}
-                  </motion.div>
-                )}
               </motion.article>
             ))}
+
+            {/* Pagination */}
+            <div className="mt-8 flex justify-center gap-2">
+              <button
+                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+                className="p-2 rounded-lg bg-violet-500/10 text-violet-400 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <ChevronLeftIcon className="h-5 w-5" />
+              </button>
+              <span className="flex items-center px-4 text-gray-300">
+                Page {currentPage} of {totalPages}
+              </span>
+              <button
+                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                disabled={currentPage === totalPages}
+                className="p-2 rounded-lg bg-violet-500/10 text-violet-400 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <ChevronRightIcon className="h-5 w-5" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Updated Blog Post Popup */}
+      <AnimatePresence>
+        {selectedPost && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50"
+          >
+            {/* Backdrop */}
+            <div 
+              className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+              onClick={() => setSelectedPost(null)}
+            />
+            
+            {/* Scrollable Content */}
+            <div className="relative h-full overflow-y-auto">
+              <div className="min-h-full p-4 flex items-start justify-center">
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 100 }}
+                  className="relative w-full max-w-4xl my-8 bg-gray-900 rounded-lg shadow-xl"
+                >
+                  {/* Fixed Header */}
+                  <div className="sticky top-0 z-10 flex justify-between items-center p-6 bg-gray-900 border-b border-gray-800 rounded-t-lg">
+                    <div className="flex items-center gap-x-4 text-xs">
+                      <time dateTime={new Date(selectedPost.createdAt).toISOString()} className="text-gray-400">
+                        {new Date(selectedPost.createdAt).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric'
+                        })}
+                      </time>
+                      <span className="inline-flex items-center rounded-full bg-violet-500/10 px-3 py-1 text-xs font-medium text-violet-400">
+                        {selectedPost.category}
+                      </span>
+                      {selectedPost.readingTime && (
+                        <span className="text-gray-400">{selectedPost.readingTime}</span>
+                      )}
+                    </div>
+                    <button
+                      onClick={() => setSelectedPost(null)}
+                      className="p-2 rounded-lg bg-gray-800/50 text-gray-400 hover:bg-gray-800"
+                    >
+                      <XMarkIcon className="h-6 w-6" />
+                    </button>
+                  </div>
+
+                  {/* Scrollable Content */}
+                  <div className="p-6">
+                    {selectedPost.image && (
+                      <div className="relative w-full h-64 mb-6 rounded-lg overflow-hidden">
+                        <img
+                          src={selectedPost.image}
+                          alt={selectedPost.title}
+                          className="object-cover w-full h-full"
+                        />
+                      </div>
+                    )}
+
+                    <h2 className="text-2xl font-bold text-white mb-4">{selectedPost.title}</h2>
+                    
+                    <div className="flex items-center gap-x-4 mb-8">
+                      <div className="h-10 w-10 rounded-full bg-violet-500/10 flex items-center justify-center">
+                        <span className="text-sm font-medium text-violet-400">
+                          {selectedPost.author[0]}
+                        </span>
+                      </div>
+                      <div className="text-sm">
+                        <p className="font-semibold text-white">{selectedPost.author}</p>
+                        {selectedPost.authorRole && (
+                          <p className="text-gray-400">{selectedPost.authorRole}</p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="prose prose-invert max-w-none">
+                      <div className="text-gray-300 whitespace-pre-line">
+                        {selectedPost.content}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <Footer />
     </>
   )

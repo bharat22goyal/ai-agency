@@ -3,64 +3,64 @@
 import Footer from '@/components/Footer'
 import { motion } from 'framer-motion'
 import { 
-  BeakerIcon,
-  CommandLineIcon,
+  SparklesIcon,
+  ChatBubbleBottomCenterTextIcon,
   CpuChipIcon,
-  ShieldCheckIcon,
+  RocketLaunchIcon,
 } from '@heroicons/react/24/outline'
 
 const services = [
   {
-    name: 'AI-Powered Test Automation',
-    description: 'Leverage artificial intelligence to create self-healing test scripts and intelligent test maintenance.',
+    name: 'Custom AI Agent Development',
+    description: 'Build sophisticated AI agents tailored to your specific business needs and workflows.',
     icon: CpuChipIcon,
     features: [
-      'Self-Healing Test Scripts',
-      'AI-Based Element Location',
-      'Intelligent Test Generation',
-      'Visual Regression Testing',
-      'Automated Test Maintenance',
+      'Specialized Task Automation',
+      'Natural Language Processing',
+      'Multi-Agent Coordination',
+      'Custom Knowledge Integration',
+      'Continuous Learning Capabilities',
     ],
-    benefits: 'Reduce test maintenance by 80% while improving test reliability and coverage.',
+    benefits: 'Automate complex tasks and decision-making processes with intelligent AI agents.',
   },
   {
-    name: 'End-to-End Testing Solutions',
-    description: 'Comprehensive testing across web, mobile, and API interfaces with advanced automation frameworks.',
-    icon: BeakerIcon,
+    name: 'Conversational AI Solutions',
+    description: 'Create engaging and context-aware conversational agents that understand and respond naturally.',
+    icon: ChatBubbleBottomCenterTextIcon,
     features: [
-      'Cross-browser Testing',
-      'Mobile App Testing',
-      'API Testing & Integration',
-      'Performance Testing',
-      'Continuous Testing in CI/CD',
+      'Natural Language Understanding',
+      'Context-Aware Responses',
+      'Multi-Channel Integration',
+      'Sentiment Analysis',
+      'Personalized Interactions',
     ],
-    benefits: 'Achieve 90% test automation coverage and reduce testing time by 60%.',
+    benefits: 'Enhance customer engagement and support with 24/7 intelligent conversation.',
   },
   {
-    name: 'Test Process Optimization',
-    description: 'Streamline your testing processes with intelligent test planning and execution strategies.',
-    icon: CommandLineIcon,
+    name: 'AI Process Automation',
+    description: 'Transform your workflows with intelligent agents that learn and adapt to your business processes.',
+    icon: SparklesIcon,
     features: [
-      'Test Strategy Development',
-      'Test Case Optimization',
-      'Risk-Based Testing',
-      'Test Environment Management',
-      'Test Data Management',
+      'Workflow Automation',
+      'Intelligent Decision Making',
+      'Data Analysis & Insights',
+      'Process Optimization',
+      'Error Detection & Handling',
     ],
-    benefits: 'Optimize testing efficiency by 75% and reduce testing costs by 50%.',
+    benefits: 'Reduce manual work by 90% while improving accuracy and efficiency.',
   },
   {
-    name: 'Quality Assurance & Security',
-    description: 'Ensure application quality and security with comprehensive testing and monitoring.',
-    icon: ShieldCheckIcon,
+    name: 'AI Integration & Deployment',
+    description: 'Seamlessly integrate and deploy AI agents into your existing systems and infrastructure.',
+    icon: RocketLaunchIcon,
     features: [
-      'Functional Testing',
-      'Security Testing',
-      'Accessibility Testing',
+      'System Integration',
+      'Cloud Deployment',
       'Performance Monitoring',
-      'Quality Metrics & Reporting',
+      'Security Implementation',
+      'Scalability Management',
     ],
-    benefits: 'Identify 95% of critical issues before production and ensure compliance with quality standards.',
+    benefits: 'Quick deployment and seamless integration with your existing tech stack.',
   },
 ]
 
@@ -77,10 +77,10 @@ export default function Services() {
             >
               <h2 className="text-base font-semibold leading-7 text-violet-400">Our Services</h2>
               <p className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                AI-Powered Testing Solutions
+                Intelligent AI Agent Solutions
               </p>
               <p className="mt-6 text-lg leading-8 text-gray-300">
-                Transform your quality assurance with intelligent test automation powered by AI, delivering faster, more reliable, and comprehensive testing coverage.
+                Transform your business with cutting-edge AI agents that automate complex tasks, enhance decision-making, and deliver exceptional results through advanced artificial intelligence.
               </p>
             </motion.div>
           </div>
