@@ -17,26 +17,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.className}>
-      <body className="bg-[#030014] min-h-screen">
-        {/* Background Effects Container - Fixed to cover entire viewport */}
-        <div className="fixed inset-0 -z-10 pointer-events-none">
-          {/* Grid */}
-          <div className="absolute inset-0 bg-grid opacity-25" />
-          
-          {/* Glow */}
-          <div className="absolute inset-0 bg-glow opacity-30" />
-          
-          {/* Moving Lines */}
-          <div className="absolute inset-0 cyber-lines opacity-20" />
+      <body className={`${inter.className} min-h-screen bg-[#030014]`}>
+        <div className="fixed inset-0 z-0">
+          <div className="bg-grid absolute inset-0" />
+          <div className="bg-glow absolute inset-0" />
+          <div className="bg-aurora absolute inset-0" />
+          <div className="cyber-lines absolute inset-0" />
         </div>
-
-        {/* Content Container - Allows scrolling while background stays fixed */}
-        <div className="relative z-0 flex flex-col min-h-screen">
+        <div className="relative z-10">
           <Navigation />
-          {/* Main Content */}
-          <main className="flex-grow">
-            {children}
-          </main>
+          {children}
         </div>
       </body>
     </html>
