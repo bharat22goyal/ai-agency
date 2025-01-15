@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Providers from "./Providers";
 import Navigation from "@/components/Navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Automatrix - AI-Powered Testing Solutions",
-  description: "Transform your business with our cutting-edge AI agents and automation solutions.",
+  description: "Transform your quality assurance with intelligent test automation powered by AI.",
 };
 
 export default function RootLayout({
@@ -25,8 +26,10 @@ export default function RootLayout({
           <div className="cyber-lines absolute inset-0" />
         </div>
         <div className="relative z-10">
-          <Navigation />
-          {children}
+          <Providers>
+            <Navigation />
+            {children}
+          </Providers>
         </div>
       </body>
     </html>
