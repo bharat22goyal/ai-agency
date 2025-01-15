@@ -75,4 +75,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Contact
 
 - Email: info@automatrix.ai
-- Phone: +1 (555) 123-4567
+- Phone: +353 899693778

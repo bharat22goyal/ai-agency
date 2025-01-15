@@ -63,7 +63,7 @@ export default function Footer() {
           <div className="mt-4 flex justify-center space-x-4 text-sm text-gray-400">
             <span>Contact: info@automatrix.ai</span>
             <span aria-hidden="true">·</span>
-            <span>Phone: +1 (555) 123-4567</span>
+            <span>Phone: +353 899693778</span>
           </div>
         </div>
       </div>
