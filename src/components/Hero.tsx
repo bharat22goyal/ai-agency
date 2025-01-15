@@ -78,47 +78,32 @@ async def coordinate_agents(agents, context):
         <div className="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-12">
           {/* Left Column - Text Content */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
             className="flex flex-col justify-center"
           >
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-4xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl"
-            >
+            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl">
               Building Intelligent AI Agents for Tomorrow
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="mt-6 text-lg leading-8 text-gray-300"
-            >
+            </h1>
+            <p className="mt-6 text-lg leading-8 text-gray-300">
               Transform your business with our cutting-edge AI agents. From intelligent automation to sophisticated conversational systems, we build solutions that evolve with your needs.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="mt-10"
-            >
+            </p>
+            <div className="mt-10">
               <a
                 href="/contact"
                 className="rounded-lg bg-violet-600 px-8 py-4 text-lg font-semibold text-white shadow-lg shadow-violet-500/30 hover:bg-violet-500 hover:shadow-violet-400/30 transition-all duration-300"
               >
                 Start Your AI Journey
               </a>
-            </motion.div>
+            </div>
           </motion.div>
 
           {/* Right Column - Code Block */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
             className="relative"
           >
             <div className="rounded-2xl overflow-hidden shadow-2xl">

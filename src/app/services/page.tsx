@@ -1,7 +1,7 @@
 'use client'
 
 import Footer from '@/components/Footer'
-import { motion } from 'framer-motion'
+import Background from '@/components/Background'
 import { 
   SparklesIcon,
   ChatBubbleBottomCenterTextIcon,
@@ -67,14 +67,11 @@ const services = [
 export default function Services() {
   return (
     <>
+      <Background />
       <div className="relative isolate pt-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8 py-24 sm:py-32">
           <div className="mx-auto max-w-2xl lg:text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
+            <div className="animate-fade-in">
               <h2 className="text-base font-semibold leading-7 text-violet-400">Our Services</h2>
               <p className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
                 Intelligent AI Agent Solutions
@@ -82,18 +79,15 @@ export default function Services() {
               <p className="mt-6 text-lg leading-8 text-gray-300">
                 Transform your business with cutting-edge AI agents that automate complex tasks, enhance decision-making, and deliver exceptional results through advanced artificial intelligence.
               </p>
-            </motion.div>
+            </div>
           </div>
 
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
             <div className="grid grid-cols-1 gap-x-8 gap-y-16 lg:grid-cols-2">
-              {services.map((service, index) => (
-                <motion.div
+              {services.map((service) => (
+                <div
                   key={service.name}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="cyber-card"
+                  className="cyber-card relative p-8 animate-fade-in"
                 >
                   <div className="flex items-center gap-x-4">
                     <service.icon className="h-8 w-8 flex-none text-violet-400" />
@@ -116,7 +110,7 @@ export default function Services() {
                     <h4 className="text-sm font-semibold leading-6 text-gray-200">Benefits</h4>
                     <p className="mt-2 text-sm leading-6 text-gray-300">{service.benefits}</p>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
