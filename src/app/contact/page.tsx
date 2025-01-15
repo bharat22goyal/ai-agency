@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Footer from '@/components/Footer'
-import Background from '@/components/Background'
+import PageTransition from '@/components/PageTransition'
 
 type FormData = {
   name: string
@@ -49,8 +49,7 @@ export default function Contact() {
   }
 
   return (
-    <>
-      <Background />
+    <PageTransition>
       <div className="relative isolate pt-24 pb-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl">
@@ -163,6 +162,6 @@ export default function Contact() {
         </div>
       </div>
       <Footer />
-    </>
+    </PageTransition>
   )
 } 

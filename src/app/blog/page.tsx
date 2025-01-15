@@ -2,14 +2,13 @@
 
 import BlogContent from './BlogContent'
 import Footer from '@/components/Footer'
-import Background from '@/components/Background'
+import PageTransition from '@/components/PageTransition'
 
 export default function Blog() {
   return (
-    <>
-      <Background />
+    <PageTransition>
       <BlogContent />
       <Footer />
-    </>
+    </PageTransition>
   )
 } 

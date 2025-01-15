@@ -1,7 +1,7 @@
 'use client'
 
 import Footer from '@/components/Footer'
-import Background from '@/components/Background'
+import PageTransition from '@/components/PageTransition'
 import { 
   SparklesIcon,
   ChatBubbleBottomCenterTextIcon,
@@ -66,8 +66,7 @@ const services = [
 
 export default function Services() {
   return (
-    <>
-      <Background />
+    <PageTransition>
       <div className="relative isolate pt-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8 py-24 sm:py-32">
           <div className="mx-auto max-w-2xl lg:text-center">
@@ -117,6 +116,6 @@ export default function Services() {
         </div>
       </div>
       <Footer />
-    </>
+    </PageTransition>
   )
 } 
