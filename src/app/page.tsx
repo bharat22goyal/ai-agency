@@ -9,25 +9,23 @@ import Footer from '@/components/Footer'
 export default function Home() {
   return (
     <>
-      <div className="relative min-h-screen">
-        {/* Background container */}
-        <div className="fixed inset-0">
-          {/* Grid background */}
-          <div className="absolute inset-0 bg-grid opacity-25" />
-          {/* Glow effect */}
-          <div className="absolute inset-0 bg-glow opacity-75" />
-          {/* Moving lines */}
-          <div className="absolute inset-0 cyber-lines opacity-20" />
-        </div>
+      {/* Background Effects - Fixed */}
+      <div className="fixed inset-0 z-0">
+        <div className="bg-grid absolute inset-0" />
+        <div className="bg-glow absolute inset-0" />
+        <div className="bg-aurora absolute inset-0" />
+        <div className="cyber-lines absolute inset-0" />
+      </div>
 
-        {/* Content */}
-        <main className="relative">
+      {/* Content Container - Scrollable */}
+      <div className="relative z-10">
+        <main>
           <Hero />
           <Stats />
           <ServicesPreview />
         </main>
+        <Footer />
       </div>
-      <Footer />
     </>
   )
 }

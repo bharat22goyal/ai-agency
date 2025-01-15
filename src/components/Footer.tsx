@@ -1,11 +1,13 @@
+'use client'
+
 import Link from 'next/link'
 
 const navigation = {
   main: [
-    { name: 'About', href: '/about' },
-    { name: 'Services', href: '/services' },
+    { name: 'Home', href: '/' },
+    { name: 'What We Do', href: '/services' },
+    { name: 'Blog', href: '/blog' },
     { name: 'Contact', href: '/contact' },
-    { name: 'Careers', href: '/careers' },
   ],
   social: [
     {
