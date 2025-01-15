@@ -1,8 +1,77 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useState } from 'react'
+
+type TabKey = 'agent' | 'task' | 'learn' | 'interact'
+
+type TabContent = {
+  name: string
+  code: string
+}
+
+type Tabs = {
+  [K in TabKey]: TabContent
+}
 
 export default function Hero() {
+  const [activeTab, setActiveTab] = useState<TabKey>('agent')
+  
+  const tabs: Tabs = {
+    agent: {
+      name: 'agent.py',
+      code: `# AI Agent initialization
+
+async def create_agent(config):
+    agent = await initialize({
+        "model": "advanced-llm",
+        "capabilities": ["reasoning", "learning"],
+        "adaptation": True,
+        "memory": "long-term"
+    })
+    return agent`
+    },
+    task: {
+      name: 'tasks.py',
+      code: `# Task execution pipeline
+
+async def execute_tasks(agent, tasks):
+    results = await agent.process({
+        "workflow": tasks,
+        "optimization": True,
+        "parallel": True,
+        "monitoring": "real-time"
+    })
+    return results`
+    },
+    learn: {
+      name: 'learning.py',
+      code: `# Continuous learning system
+
+async def improve_agent(agent, feedback):
+    knowledge = await agent.learn({
+        "experience": feedback,
+        "pattern_recognition": True,
+        "adaptation_rate": 0.8,
+        "validation": "real-time"
+    })
+    return knowledge.insights`
+    },
+    interact: {
+      name: 'interaction.py',
+      code: `# Multi-agent communication
+
+async def coordinate_agents(agents, context):
+    network = await establish_network({
+        "topology": "mesh",
+        "protocol": "consensus",
+        "security": "encrypted",
+        "fallback": True
+    })
+    return network.connect(agents)`
+    }
+  }
+
   return (
     <div className="relative pt-32 lg:pt-40 pb-20">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -54,24 +123,39 @@ export default function Hero() {
           >
             <div className="rounded-2xl overflow-hidden shadow-2xl">
               {/* Tabs */}
-              <div className="flex text-sm">
-                <div className="px-6 py-3 bg-[#1a1b26] text-white border-r border-gray-800">
-                  dashboard.py
-                </div>
-                <div className="px-6 py-3 text-gray-500">
-                  analytics.py
-                </div>
+              <div className="flex text-sm overflow-x-auto">
+                {(Object.entries(tabs) as [TabKey, TabContent][]).map(([key, value]) => (
+                  <button
+                    key={key}
+                    onClick={() => setActiveTab(key)}
+                    className={`px-6 py-3 transition-colors duration-200 whitespace-nowrap ${
+                      activeTab === key 
+                        ? 'bg-[#1a1b26] text-white border-r border-gray-800' 
+                        : 'text-gray-500 hover:text-gray-400'
+                    }`}
+                  >
+                    {value.name}
+                  </button>
+                ))}
               </div>
               {/* Code content */}
               <div className="font-mono text-[15px] bg-[#1a1b26] p-8">
-                <div className="text-emerald-400"># AI-powered automation</div>
-                <div className="text-white mt-4">async def automate():</div>
-                <div className="text-white ml-8">efficiency = await process({'{'}</div>
-                <div className="text-white ml-12">"process": "business-logic",</div>
-                <div className="text-white ml-12">"optimization": True,</div>
-                <div className="text-white ml-12">"intelligence": "artificial"</div>
-                <div className="text-white ml-8">{'}'})</div>
-                <div className="text-white ml-8">return efficiency</div>
+                {tabs[activeTab].code.split('\n').map((line: string, i: number) => (
+                  <div 
+                    key={i} 
+                    className={`${
+                      line.startsWith('#') 
+                        ? 'text-emerald-400' 
+                        : line.match(/["'][^"']*["']/) 
+                          ? 'text-amber-300'
+                          : line.match(/True|False/) 
+                            ? 'text-violet-400'
+                            : 'text-white'
+                    } whitespace-pre`}
+                  >
+                    {line}
+                  </div>
+                ))}
               </div>
             </div>
           </motion.div>
