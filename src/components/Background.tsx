@@ -41,7 +41,7 @@ export default function Background() {
           y: (Math.random() - 0.5) * 0.5
         }
         this.hue = Math.random() * 60 - 30 // Range from -30 to 30
-        this.brightness = 0.3 + Math.random() * 0.4
+        this.brightness = 0.5 + Math.random() * 0.3 // Increased base brightness
       }
 
       update(width: number, height: number) {
@@ -67,7 +67,7 @@ export default function Background() {
         // Draw glow
         ctx.beginPath()
         ctx.arc(this.x, this.y, this.radius * 2, 0, Math.PI * 2)
-        ctx.fillStyle = `hsla(${270 + this.hue}, 100%, 70%, ${this.brightness * 0.3})`
+        ctx.fillStyle = `hsla(${270 + this.hue}, 100%, 70%, ${this.brightness * 0.4})`
         ctx.fill()
       }
     }
@@ -94,8 +94,9 @@ export default function Background() {
     const animate = () => {
       if (!ctx || !canvas) return
 
-      // Clear with fade effect
-      ctx.fillStyle = 'rgba(3, 0, 20, 0.1)'
+      // Clear canvas completely
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.fillStyle = 'rgb(3, 0, 20)'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
       // Update and draw nodes
@@ -109,7 +110,7 @@ export default function Background() {
           const distance = Math.sqrt(dx * dx + dy * dy)
           
           if (distance < maxDistance) {
-            const opacity = (1 - distance / maxDistance) * 0.2
+            const opacity = (1 - distance / maxDistance) * 0.3 // Increased connection opacity
             ctx.beginPath()
             ctx.moveTo(node.x, node.y)
             ctx.lineTo(connectedNode.x, connectedNode.y)
@@ -131,8 +132,8 @@ export default function Background() {
         canvas.height / 2,
         canvas.width / 2
       )
-      gradient.addColorStop(0, 'rgba(139, 92, 246, 0.03)')
-      gradient.addColorStop(0.5, 'rgba(99, 102, 241, 0.02)')
+      gradient.addColorStop(0, 'rgba(139, 92, 246, 0.05)')
+      gradient.addColorStop(0.5, 'rgba(99, 102, 241, 0.03)')
       gradient.addColorStop(1, 'rgba(3, 0, 20, 0)')
       ctx.fillStyle = gradient
       ctx.fillRect(0, 0, canvas.width, canvas.height)
