@@ -119,51 +119,44 @@ export default function Blog() {
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="cyber-card"
+                className="cyber-card flex flex-col"
               >
-                <div className="relative w-full">
-                  <div className="aspect-[16/9] w-full rounded-2xl placeholder-image" />
-                  <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-violet-500/20" />
+                <div className="flex items-center gap-x-4 text-xs">
+                  <time dateTime={post.datetime} className="text-gray-400">
+                    {post.date}
+                  </time>
+                  <span className="inline-flex items-center rounded-full bg-violet-500/10 px-3 py-1 text-xs font-medium text-violet-400">
+                    {post.category.name}
+                  </span>
+                  <span className="text-gray-400">{post.readingTime}</span>
                 </div>
-                <div className="max-w-xl">
-                  <div className="mt-8 flex items-center gap-x-4 text-xs">
-                    <time dateTime={post.datetime} className="text-gray-400">
-                      {post.date}
-                    </time>
-                    <span className="inline-flex items-center rounded-full bg-violet-500/10 px-3 py-1 text-xs font-medium text-violet-400">
-                      {post.category.name}
+                <div className="group relative mt-4">
+                  <h3 className="text-lg font-semibold leading-6 text-white">
+                    {post.title}
+                  </h3>
+                  <p className="mt-4 text-sm leading-6 text-gray-300">
+                    {post.description}
+                  </p>
+                </div>
+                <div className="relative mt-8 flex items-center gap-x-4">
+                  <div className="h-10 w-10 rounded-full bg-violet-500/10 flex items-center justify-center">
+                    <span className="text-sm font-medium text-violet-400">
+                      {post.author.name[0]}
                     </span>
-                    <span className="text-gray-400">{post.readingTime}</span>
                   </div>
-                  <div className="group relative">
-                    <h3 className="mt-3 text-lg font-semibold leading-6 text-white">
-                      <span className="absolute inset-0" />
-                      {post.title}
-                    </h3>
-                    <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-300">
-                      {post.description}
+                  <div className="text-sm leading-6">
+                    <p className="font-semibold text-white">
+                      {post.author.name}
                     </p>
+                    <p className="text-gray-400">{post.author.role}</p>
                   </div>
-                  <div className="relative mt-8 flex items-center gap-x-4">
-                    <div className="h-10 w-10 rounded-full bg-violet-500/10 flex items-center justify-center">
-                      <span className="text-sm font-medium text-violet-400">
-                        {post.author.name[0]}
-                      </span>
-                    </div>
-                    <div className="text-sm leading-6">
-                      <p className="font-semibold text-white">
-                        {post.author.name}
-                      </p>
-                      <p className="text-gray-400">{post.author.role}</p>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => setExpandedPost(expandedPost === post.id ? null : post.id)}
-                    className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-violet-600 hover:bg-violet-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500"
-                  >
-                    {expandedPost === post.id ? 'Show Less' : 'Read More'}
-                  </button>
                 </div>
+                <button
+                  onClick={() => setExpandedPost(expandedPost === post.id ? null : post.id)}
+                  className="mt-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-violet-600 hover:bg-violet-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500"
+                >
+                  {expandedPost === post.id ? 'Show Less' : 'Read More'}
+                </button>
                 {expandedPost === post.id && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
