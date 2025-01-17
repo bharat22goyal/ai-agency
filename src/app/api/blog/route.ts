@@ -24,13 +24,10 @@ export async function GET() {
         title: true,
         content: true,
         description: true,
-        slug: true,
         image: true,
         published: true,
         category: true,
         author: true,
-        authorRole: true,
-        readingTime: true,
         createdAt: true,
         updatedAt: true,
       }
@@ -100,13 +97,10 @@ export async function POST(request: Request) {
         title: data.title,
         content: data.content,
         description: data.description,
-        slug: data.slug,
         image: data.image || '',
         published: data.published,
         category: data.category || 'General',
         author: data.author || 'Automatrix Team',
-        authorRole: data.authorRole || '',
-        readingTime: data.readingTime || '',
       }
     })
 
@@ -161,13 +155,10 @@ export async function PUT(request: Request) {
         title: data.title,
         content: data.content,
         description: data.description,
-        slug: data.slug,
         image: data.image || '',
         published: data.published,
         category: data.category || 'General',
         author: data.author || 'Automatrix Team',
-        authorRole: data.authorRole || '',
-        readingTime: data.readingTime || '',
       }
     })
 

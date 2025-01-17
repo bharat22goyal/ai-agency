@@ -10,13 +10,10 @@ type BlogPost = {
   title: string
   content: string
   description: string
-  slug: string
   image?: string
   published: boolean
   category: string
   author: string
-  authorRole?: string
-  readingTime?: string
   createdAt: string
   updatedAt: string
 }
@@ -55,7 +52,8 @@ export default function BlogContent() {
         throw new Error(errorMessage)
       }
       
-      setPosts(Array.isArray(data) ? data : [])
+      const publishedPosts = Array.isArray(data) ? data.filter(post => post.published) : []
+      setPosts(publishedPosts)
       setError(null)
       setLoading(false)
     } catch (error) {
@@ -111,11 +109,8 @@ export default function BlogContent() {
             className="mx-auto max-w-2xl text-center"
           >
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Latest Insights in AI and Testing
+              Latest Insights in AI
             </h2>
-            <p className="mt-2 text-lg leading-8 text-gray-300">
-              Expert perspectives on modern testing practices, AI-powered automation, and quality assurance strategies.
-            </p>
           </motion.div>
           
           <div className="mx-auto mt-16 max-w-3xl">
@@ -139,9 +134,6 @@ export default function BlogContent() {
                   <span className="inline-flex items-center rounded-full bg-violet-500/10 px-3 py-1 text-xs font-medium text-violet-400">
                     {post.category}
                   </span>
-                  {post.readingTime && (
-                    <span className="text-gray-400">{post.readingTime}</span>
-                  )}
                 </div>
 
                 <h3 className="text-xl font-semibold text-white mb-2">{post.title}</h3>
@@ -155,34 +147,33 @@ export default function BlogContent() {
                   </div>
                   <div className="text-sm">
                     <p className="font-semibold text-white">{post.author}</p>
-                    {post.authorRole && (
-                      <p className="text-gray-400">{post.authorRole}</p>
-                    )}
                   </div>
                 </div>
               </motion.article>
             ))}
 
             {/* Pagination */}
-            <div className="mt-8 flex justify-center gap-2">
-              <button
-                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                disabled={currentPage === 1}
-                className="p-2 rounded-lg bg-violet-500/10 text-violet-400 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <ChevronLeftIcon className="h-5 w-5" />
-              </button>
-              <span className="flex items-center px-4 text-gray-300">
-                Page {currentPage} of {totalPages}
-              </span>
-              <button
-                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                disabled={currentPage === totalPages}
-                className="p-2 rounded-lg bg-violet-500/10 text-violet-400 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <ChevronRightIcon className="h-5 w-5" />
-              </button>
-            </div>
+            {posts.length > 0 && (
+              <div className="mt-8 flex justify-center gap-2">
+                <button
+                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="p-2 rounded-lg bg-violet-500/10 text-violet-400 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <ChevronLeftIcon className="h-5 w-5" />
+                </button>
+                <span className="flex items-center px-4 text-gray-300">
+                  Page {currentPage} of {totalPages}
+                </span>
+                <button
+                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  className="p-2 rounded-lg bg-violet-500/10 text-violet-400 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <ChevronRightIcon className="h-5 w-5" />
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -224,9 +215,6 @@ export default function BlogContent() {
                       <span className="inline-flex items-center rounded-full bg-violet-500/10 px-3 py-1 text-xs font-medium text-violet-400">
                         {selectedPost.category}
                       </span>
-                      {selectedPost.readingTime && (
-                        <span className="text-gray-400">{selectedPost.readingTime}</span>
-                      )}
                     </div>
                     <button
                       onClick={() => setSelectedPost(null)}
@@ -258,9 +246,6 @@ export default function BlogContent() {
                       </div>
                       <div className="text-sm">
                         <p className="font-semibold text-white">{selectedPost.author}</p>
-                        {selectedPost.authorRole && (
-                          <p className="text-gray-400">{selectedPost.authorRole}</p>
-                        )}
                       </div>
                     </div>
 

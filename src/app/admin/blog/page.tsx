@@ -29,13 +29,10 @@ export default function AdminBlog() {
     title: '',
     content: '',
     description: '',
-    slug: '',
     image: '',
     published: false,
     category: 'General',
-    author: 'Automatrix Team',
-    authorRole: '',
-    readingTime: ''
+    author: 'Automatrix Team'
   })
   const [editingId, setEditingId] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
@@ -113,13 +110,10 @@ export default function AdminBlog() {
         title: '',
         content: '',
         description: '',
-        slug: '',
         image: '',
         published: false,
         category: 'General',
-        author: 'Automatrix Team',
-        authorRole: '',
-        readingTime: ''
+        author: 'Automatrix Team'
       })
       setEditingId(null)
     } catch (error) {
@@ -133,13 +127,10 @@ export default function AdminBlog() {
       title: post.title,
       content: post.content,
       description: post.description,
-      slug: post.slug,
       image: post.image || '',
       published: post.published,
       category: post.category,
-      author: post.author,
-      authorRole: post.authorRole || '',
-      readingTime: post.readingTime || ''
+      author: post.author
     })
     setEditingId(post.id)
   }
@@ -225,20 +216,6 @@ export default function AdminBlog() {
           </div>
 
           <div>
-            <label htmlFor="slug" className="block text-sm font-medium text-gray-300">
-              Slug
-            </label>
-            <input
-              type="text"
-              id="slug"
-              value={formData.slug}
-              onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-              className="mt-1 block w-full rounded-md border-0 bg-gray-800 py-2 px-3 text-white shadow-sm ring-1 ring-inset ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-violet-500"
-              required
-            />
-          </div>
-
-          <div>
             <label htmlFor="content" className="block text-sm font-medium text-gray-300">
               Content
             </label>
@@ -290,33 +267,6 @@ export default function AdminBlog() {
               onChange={(e) => setFormData({ ...formData, author: e.target.value })}
               className="mt-1 block w-full rounded-md border-0 bg-gray-800 py-2 px-3 text-white shadow-sm ring-1 ring-inset ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-violet-500"
               required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="authorRole" className="block text-sm font-medium text-gray-300">
-              Author Role
-            </label>
-            <input
-              type="text"
-              id="authorRole"
-              value={formData.authorRole}
-              onChange={(e) => setFormData({ ...formData, authorRole: e.target.value })}
-              className="mt-1 block w-full rounded-md border-0 bg-gray-800 py-2 px-3 text-white shadow-sm ring-1 ring-inset ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-violet-500"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="readingTime" className="block text-sm font-medium text-gray-300">
-              Reading Time
-            </label>
-            <input
-              type="text"
-              id="readingTime"
-              value={formData.readingTime}
-              onChange={(e) => setFormData({ ...formData, readingTime: e.target.value })}
-              className="mt-1 block w-full rounded-md border-0 bg-gray-800 py-2 px-3 text-white shadow-sm ring-1 ring-inset ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-violet-500"
-              placeholder="e.g. 5 min read"
             />
           </div>
 
