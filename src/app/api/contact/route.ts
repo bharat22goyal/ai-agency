@@ -1,19 +1,20 @@
-import { NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth'
+import { prisma } from '@/lib/prisma'
 
-const prisma = new PrismaClient()
 
+// Get all contact submissions
 export async function GET() {
   try {
     const session = await getServerSession(authOptions)
     
     if (!session) {
-      return NextResponse.json(
-        { message: 'Unauthorized' },
-        { status: 401 }
-      )
+      return new Response(JSON.stringify({ message: 'Unauthorized' }), {
+        status: 401,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
     }
 
     const submissions = await prisma.contactSubmission.findMany({
@@ -22,15 +23,25 @@ export async function GET() {
       }
     })
 
-    return NextResponse.json(submissions)
+    return new Response(JSON.stringify(submissions), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
   } catch (error) {
     console.error('Error fetching submissions:', error)
-    return NextResponse.json(
+    return new Response(
+      JSON.stringify({ 
+        message: 'Error fetching submissions', 
+        error: error instanceof Error ? error.message : String(error)
+      }),
       { 
-        message: 'Error fetching submissions',
-        error: error instanceof Error ? error.message : 'An unknown error occurred'
-      },
-      { status: 500 }
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
     )
   }
 }
@@ -40,34 +51,48 @@ export async function DELETE(request: Request) {
     const session = await getServerSession(authOptions)
     
     if (!session) {
-      return NextResponse.json(
-        { message: 'Unauthorized' },
-        { status: 401 }
-      )
+      return new Response(JSON.stringify({ message: 'Unauthorized' }), {
+        status: 401,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
     }
 
     const { id } = await request.json()
     
     if (!id) {
-      return NextResponse.json(
-        { message: 'Missing submission ID' },
-        { status: 400 }
-      )
+      return new Response(JSON.stringify({ message: 'Missing submission ID' }), {
+        status: 400,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
     }
 
     await prisma.contactSubmission.delete({
       where: { id }
     })
 
-    return NextResponse.json({ message: 'Submission deleted' })
+    return new Response(JSON.stringify({ message: 'Submission deleted' }), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
   } catch (error) {
     console.error('Error deleting submission:', error)
-    return NextResponse.json(
-      { 
+    return new Response(
+      JSON.stringify({ 
         message: 'Error deleting submission',
-        error: error instanceof Error ? error.message : 'An unknown error occurred'
-      },
-      { status: 500 }
+        error: error instanceof Error ? error.message : String(error)
+      }),
+      { 
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
     )
   }
 }
@@ -78,10 +103,12 @@ export async function POST(request: Request) {
 
     // Validate request data
     if (!name || !email || !message) {
-      return NextResponse.json(
-        { message: 'Missing required fields' },
-        { status: 400 }
-      )
+      return new Response(JSON.stringify({ message: 'Missing required fields' }), {
+        status: 400,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
     }
 
     // Store in database
@@ -94,18 +121,28 @@ export async function POST(request: Request) {
       }
     })
 
-    return NextResponse.json({ 
+    return new Response(JSON.stringify({ 
       message: 'Submission received',
       data: submission
+    }), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
   } catch (error) {
     console.error('Contact form error:', error instanceof Error ? error.message : 'Unknown error')
-    return NextResponse.json(
-      { 
+    return new Response(
+      JSON.stringify({ 
         message: 'Error processing submission',
-        error: error instanceof Error ? error.message : 'An unknown error occurred'
-      },
-      { status: 500 }
+        error: error instanceof Error ? error.message : String(error)
+      }),
+      { 
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
     )
   }
 } 

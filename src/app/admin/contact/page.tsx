@@ -15,7 +15,7 @@ type ContactSubmission = {
 }
 
 export default function AdminContact() {
-  const { data: session, status } = useSession()
+  const { status } = useSession()
   const [submissions, setSubmissions] = useState<ContactSubmission[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)

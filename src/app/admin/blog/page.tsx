@@ -22,7 +22,7 @@ type BlogPost = {
 }
 
 export default function AdminBlog() {
-  const { data: session, status } = useSession()
+  const { status } = useSession()
   const router = useRouter()
   const [posts, setPosts] = useState<BlogPost[]>([])
   const [formData, setFormData] = useState({

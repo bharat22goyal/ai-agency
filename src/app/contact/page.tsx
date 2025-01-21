@@ -66,7 +66,7 @@ export default function Contact() {
               transition={{ delay: 0.1 }}
               className="mt-4 text-lg leading-8 text-gray-300 text-center"
             >
-              Have a project in mind? Let's discuss how we can help bring your ideas to life.
+              Let&apos;s discuss how we can help transform your business with AI.
             </motion.p>
           </div>
 
@@ -141,7 +141,7 @@ export default function Contact() {
               {status === 'success' && (
                 <div className="rounded-md bg-green-900/50 p-4">
                   <p className="text-sm text-green-400">
-                    Thank you for your message! We'll get back to you soon.
+                    Thank you for your message! We&apos;ll get back to you soon.
                   </p>
                 </div>
               )}

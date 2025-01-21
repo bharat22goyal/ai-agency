@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Footer from '@/components/Footer'
 import { motion, AnimatePresence } from 'framer-motion'
 import { XMarkIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
+import Image from 'next/image'
 
 type BlogPost = {
   id: string
@@ -227,11 +228,12 @@ export default function BlogContent() {
                   {/* Scrollable Content */}
                   <div className="p-6">
                     {selectedPost.image && (
-                      <div className="relative w-full h-64 mb-6 rounded-lg overflow-hidden">
-                        <img
-                          src={selectedPost.image}
+                      <div className="relative h-64 w-full overflow-hidden rounded-lg">
+                        <Image
+                          src={selectedPost.image || '/blog-placeholder.jpg'}
                           alt={selectedPost.title}
-                          className="object-cover w-full h-full"
+                          fill
+                          className="object-cover"
                         />
                       </div>
                     )}

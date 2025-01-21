@@ -18,7 +18,7 @@ type Service = {
 }
 
 export default function AdminServices() {
-  const { data: session, status } = useSession()
+  const { status } = useSession()
   const router = useRouter()
   const [services, setServices] = useState<Service[]>([])
   const [formData, setFormData] = useState({

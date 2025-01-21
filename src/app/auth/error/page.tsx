@@ -1,39 +1,38 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import { motion } from 'framer-motion'
-import Link from 'next/link'
+import { Suspense } from 'react'
 
-export default function AuthError() {
+function ErrorContent() {
   const searchParams = useSearchParams()
   const error = searchParams.get('error')
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="max-w-md w-full space-y-8 p-8 cyber-card"
-      >
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
-            Authentication Error
-          </h2>
-          <p className="mt-2 text-center text-sm text-red-400">
+      <div className="max-w-md w-full p-6">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-white mb-4">Authentication Error</h1>
+          <p className="text-gray-300 mb-6">
             {error === 'AccessDenied' 
-              ? 'You are not authorized to access this page.'
-              : 'There was an error signing in.'}
+              ? 'You are not authorized to access this page. Please contact the administrator.'
+              : 'An error occurred during authentication. Please try again.'}
           </p>
-        </div>
-        <div className="mt-8 space-y-6">
-          <Link
+          <a
             href="/auth/signin"
-            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500"
+            className="inline-block bg-violet-600 text-white px-4 py-2 rounded-md hover:bg-violet-500 transition-colors"
           >
-            Try Again
-          </Link>
+            Back to Sign In
+          </a>
         </div>
-      </motion.div>
+      </div>
     </div>
+  )
+}
+
+export default function ErrorPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <ErrorContent />
+    </Suspense>
   )
 } 

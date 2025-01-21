@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
+import Link from 'next/link'
 
 export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -51,9 +52,11 @@ export default function Navigation() {
               transition={{ duration: 0.5 }}
               className="flex lg:flex-1"
             >
-              <a href="/" className="-m-1.5 p-1.5 text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-violet-200 to-violet-400 hover:from-violet-300 hover:via-white hover:to-violet-300 transition-all duration-300">
-                Automatrix
-              </a>
+              <Link href="/" className="flex items-center gap-2">
+                <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-violet-200 to-violet-400">
+                  Automatrix
+                </span>
+              </Link>
             </motion.div>
 
             {/* Desktop navigation */}
@@ -121,9 +124,11 @@ export default function Navigation() {
             transition={{ duration: 0.5 }}
             className="flex lg:flex-1"
           >
-            <a href="/" className="-m-1.5 p-1.5 text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-violet-200 to-violet-400 hover:from-violet-300 hover:via-white hover:to-violet-300 transition-all duration-300">
-              Automatrix
-            </a>
+            <Link href="/" className="flex items-center gap-2">
+              <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-violet-200 to-violet-400">
+                Automatrix
+              </span>
+            </Link>
           </motion.div>
 
           {/* Mobile menu button */}

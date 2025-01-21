@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 import { DocumentTextIcon, ChatBubbleLeftIcon, CpuChipIcon } from '@heroicons/react/24/outline'
 
 export default function AdminPage() {
-  const { data: session, status } = useSession()
+  const { status } = useSession()
 
   if (status === 'loading') {
     return <div className="text-center py-12">Loading...</div>
