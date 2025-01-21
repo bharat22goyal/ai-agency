@@ -20,6 +20,18 @@ model BlogPost {
   updatedAt   DateTime @updatedAt
 }
 
+model Service {
+  id          String   @id @default(cuid())
+  name        String
+  description String   @db.Text
+  features    String[] @default([])
+  benefits    String   @db.Text
+  icon        String   @default("SparklesIcon")
+  published   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 model ContactSubmission {
   id        String   @id @default(cuid())
   name      String

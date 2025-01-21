@@ -61,7 +61,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} Automatrix. All rights reserved.
           </p>
           <div className="mt-4 flex justify-center space-x-4 text-sm text-gray-400">
-            <span>Contact: info@automatrix.ai</span>
+            <span>Contact: bharat94goyal@gmail.com</span>
             <span aria-hidden="true">·</span>
             <span>Phone: +353 899693778</span>
           </div>

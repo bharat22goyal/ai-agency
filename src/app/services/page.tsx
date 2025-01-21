@@ -1,70 +1,94 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import Footer from '@/components/Footer'
 import PageTransition from '@/components/PageTransition'
 import { 
   SparklesIcon,
   ChatBubbleBottomCenterTextIcon,
   CpuChipIcon,
-  RocketLaunchIcon,
+  CommandLineIcon,
+  CircleStackIcon,
 } from '@heroicons/react/24/outline'
 
-const services = [
-  {
-    name: 'Custom AI Agent Development',
-    description: 'Build sophisticated AI agents tailored to your specific business needs and workflows.',
-    icon: CpuChipIcon,
-    features: [
-      'Specialized Task Automation',
-      'Natural Language Processing',
-      'Multi-Agent Coordination',
-      'Custom Knowledge Integration',
-      'Continuous Learning Capabilities',
-    ],
-    benefits: 'Automate complex tasks and decision-making processes with intelligent AI agents.',
-  },
-  {
-    name: 'Conversational AI Solutions',
-    description: 'Create engaging and context-aware conversational agents that understand and respond naturally.',
-    icon: ChatBubbleBottomCenterTextIcon,
-    features: [
-      'Natural Language Understanding',
-      'Context-Aware Responses',
-      'Multi-Channel Integration',
-      'Sentiment Analysis',
-      'Personalized Interactions',
-    ],
-    benefits: 'Enhance customer engagement and support with 24/7 intelligent conversation.',
-  },
-  {
-    name: 'AI Process Automation',
-    description: 'Transform your workflows with intelligent agents that learn and adapt to your business processes.',
-    icon: SparklesIcon,
-    features: [
-      'Workflow Automation',
-      'Intelligent Decision Making',
-      'Data Analysis & Insights',
-      'Process Optimization',
-      'Error Detection & Handling',
-    ],
-    benefits: 'Reduce manual work by 90% while improving accuracy and efficiency.',
-  },
-  {
-    name: 'AI Integration & Deployment',
-    description: 'Seamlessly integrate and deploy AI agents into your existing systems and infrastructure.',
-    icon: RocketLaunchIcon,
-    features: [
-      'System Integration',
-      'Cloud Deployment',
-      'Performance Monitoring',
-      'Security Implementation',
-      'Scalability Management',
-    ],
-    benefits: 'Quick deployment and seamless integration with your existing tech stack.',
-  },
-]
+type Service = {
+  id: string
+  name: string
+  description: string
+  features: string[]
+  benefits: string
+  icon: string
+  published: boolean
+}
+
+const iconComponents = {
+  SparklesIcon,
+  ChatBubbleBottomCenterTextIcon,
+  CpuChipIcon,
+  CommandLineIcon,
+  CircleStackIcon,
+}
 
 export default function Services() {
+  const [services, setServices] = useState<Service[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    fetchServices()
+  }, [])
+
+  const fetchServices = async () => {
+    try {
+      const response = await fetch('/api/services')
+      const data = await response.json()
+      
+      if (!response.ok) {
+        throw new Error(data.error || data.message || 'Failed to fetch services')
+      }
+
+      setServices(data)
+      setLoading(false)
+    } catch (error) {
+      console.error('Error fetching services:', error)
+      setError(error instanceof Error ? error.message : 'Failed to fetch services')
+      setLoading(false)
+    }
+  }
+
+  if (loading) {
+    return (
+      <PageTransition>
+        <div className="relative isolate pt-24">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8 py-24 sm:py-32">
+            <div className="text-center">Loading...</div>
+          </div>
+        </div>
+      </PageTransition>
+    )
+  }
+
+  if (error) {
+    return (
+      <PageTransition>
+        <div className="relative isolate pt-24">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8 py-24 sm:py-32">
+            <div className="text-center text-red-400">
+              <p>Error: {error}</p>
+              <button
+                onClick={() => fetchServices()}
+                className="mt-4 px-4 py-2 bg-violet-600 text-white rounded-md hover:bg-violet-500"
+              >
+                Try Again
+              </button>
+            </div>
+          </div>
+        </div>
+      </PageTransition>
+    )
+  }
+
   return (
     <PageTransition>
       <div className="relative isolate pt-24">
@@ -76,42 +100,50 @@ export default function Services() {
                 Intelligent AI Agent Solutions
               </p>
               <p className="mt-6 text-lg leading-8 text-gray-300">
-                Transform your business with cutting-edge AI agents that automate complex tasks, enhance decision-making, and deliver exceptional results through advanced artificial intelligence.
+                Transform your business with cutting-edge AI agents that automate complex tasks, enhance decision-making, and drive innovation.
               </p>
             </div>
           </div>
 
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-            <div className="grid grid-cols-1 gap-x-8 gap-y-16 lg:grid-cols-2">
-              {services.map((service) => (
-                <div
-                  key={service.name}
-                  className="cyber-card relative p-8 animate-fade-in"
-                >
-                  <div className="flex items-center gap-x-4">
-                    <service.icon className="h-8 w-8 flex-none text-violet-400" />
-                    <h3 className="text-lg font-semibold leading-8 text-white">{service.name}</h3>
-                  </div>
-                  <p className="mt-4 text-base leading-7 text-gray-300">{service.description}</p>
-                  
-                  <div className="mt-8">
-                    <h4 className="text-sm font-semibold leading-6 text-gray-200">Key Features</h4>
-                    <ul className="mt-2 space-y-2">
-                      {service.features.map((feature) => (
-                        <li key={feature} className="text-sm leading-6 text-gray-300">
-                          • {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  
-                  <div className="mt-8 pt-8 border-t border-violet-500/20">
-                    <h4 className="text-sm font-semibold leading-6 text-gray-200">Benefits</h4>
-                    <p className="mt-2 text-sm leading-6 text-gray-300">{service.benefits}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
+              {services.map((service, index) => {
+                const IconComponent = iconComponents[service.icon as keyof typeof iconComponents]
+                return (
+                  <motion.div
+                    key={service.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="cyber-card"
+                  >
+                    <dt className="text-base font-semibold leading-7 text-white">
+                      <div className="mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-violet-600">
+                        {IconComponent && <IconComponent className="h-6 w-6 text-white" aria-hidden="true" />}
+                      </div>
+                      {service.name}
+                    </dt>
+                    <dd className="mt-1 flex flex-auto flex-col text-base leading-7 text-gray-300">
+                      <p className="flex-auto">{service.description}</p>
+                      <div className="mt-6 space-y-4">
+                        <h4 className="text-sm font-semibold leading-6 text-gray-200">Key Features</h4>
+                        <ul className="space-y-2">
+                          {service.features.map((feature, i) => (
+                            <li key={i} className="text-sm leading-6 text-gray-300">
+                              • {feature}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="mt-6 pt-6 border-t border-violet-500/20">
+                        <h4 className="text-sm font-semibold leading-6 text-gray-200">Benefits</h4>
+                        <p className="mt-2 text-sm leading-6 text-gray-300">{service.benefits}</p>
+                      </div>
+                    </dd>
+                  </motion.div>
+                )
+              })}
+            </dl>
           </div>
         </div>
       </div>

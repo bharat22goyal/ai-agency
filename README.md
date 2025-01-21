@@ -74,5 +74,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-- Email: info@automatrix.ai
+- Email: bharat94goyal@gmail.com
 - Phone: +353 899693778
