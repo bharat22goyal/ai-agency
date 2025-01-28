@@ -34,7 +34,10 @@ export const authOptions: NextAuthOptions = {
       return isAuthorized
     },
     async redirect({ url, baseUrl }) {
-      if (url.startsWith(baseUrl)) return url
+      // Allow relative URLs
+      if (url.startsWith('/')) return `${baseUrl}${url}`
+      // Allow URLs of the same origin
+      else if (new URL(url).origin === baseUrl) return url
       return baseUrl
     },
     async session({ session }) {
@@ -47,5 +50,5 @@ export const authOptions: NextAuthOptions = {
       return token
     },
   },
-  debug: true,
+  debug: process.env.NODE_ENV === 'development',
 } 
