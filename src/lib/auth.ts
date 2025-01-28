@@ -1,10 +1,6 @@
 import { NextAuthOptions } from 'next-auth'
 import GithubProvider from 'next-auth/providers/github'
 
-const VERCEL_URL = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : process.env.NEXTAUTH_URL
-
 export const authOptions: NextAuthOptions = {
   providers: [
     GithubProvider({
