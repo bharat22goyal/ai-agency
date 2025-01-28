@@ -1,6 +1,10 @@
 import { NextAuthOptions } from 'next-auth'
 import GithubProvider from 'next-auth/providers/github'
 
+const VERCEL_URL = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : process.env.NEXTAUTH_URL
+
 export const authOptions: NextAuthOptions = {
   providers: [
     GithubProvider({
@@ -34,10 +38,27 @@ export const authOptions: NextAuthOptions = {
       return isAuthorized
     },
     async redirect({ url, baseUrl }) {
+      const trustedHosts = [
+        'localhost:3000',
+        'ai-agency-three.vercel.app'
+      ]
+      
       // Allow relative URLs
-      if (url.startsWith('/')) return `${baseUrl}${url}`
-      // Allow URLs of the same origin
-      else if (new URL(url).origin === baseUrl) return url
+      if (url.startsWith('/')) {
+        return `${baseUrl}${url}`
+      }
+      
+      // Check if the URL is trusted
+      try {
+        const urlObj = new URL(url)
+        if (trustedHosts.includes(urlObj.host)) {
+          return url
+        }
+      } catch {
+        // Invalid URL, return to base
+        return baseUrl
+      }
+      
       return baseUrl
     },
     async session({ session }) {

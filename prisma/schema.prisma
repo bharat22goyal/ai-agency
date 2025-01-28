@@ -12,7 +12,6 @@ model BlogPost {
   title       String
   content     String   @db.Text
   description String   @db.Text
-  image       String?
   published   Boolean  @default(false)
   category    String   @default("General")
   author      String   @default("Automatrix Team")

@@ -10,13 +10,9 @@ type BlogPost = {
   title: string
   content: string
   description: string
-  slug: string
-  image?: string
   published: boolean
   category: string
   author: string
-  authorRole?: string
-  readingTime?: string
   createdAt: string
   updatedAt: string
 }
@@ -29,7 +25,6 @@ export default function AdminBlog() {
     title: '',
     content: '',
     description: '',
-    image: '',
     published: false,
     category: 'General',
     author: 'Automatrix Team'
@@ -110,7 +105,6 @@ export default function AdminBlog() {
         title: '',
         content: '',
         description: '',
-        image: '',
         published: false,
         category: 'General',
         author: 'Automatrix Team'
@@ -127,7 +121,6 @@ export default function AdminBlog() {
       title: post.title,
       content: post.content,
       description: post.description,
-      image: post.image || '',
       published: post.published,
       category: post.category,
       author: post.author
@@ -230,19 +223,6 @@ export default function AdminBlog() {
           </div>
 
           <div>
-            <label htmlFor="image" className="block text-sm font-medium text-gray-300">
-              Image URL
-            </label>
-            <input
-              type="text"
-              id="image"
-              value={formData.image}
-              onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-              className="mt-1 block w-full rounded-md border-0 bg-gray-800 py-2 px-3 text-white shadow-sm ring-1 ring-inset ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-violet-500"
-            />
-          </div>
-
-          <div>
             <label htmlFor="category" className="block text-sm font-medium text-gray-300">
               Category
             </label>
@@ -328,7 +308,7 @@ export default function AdminBlog() {
                   Category: {post.category}
                 </p>
                 <p className="mt-1 text-sm text-gray-400">
-                  Author: {post.author} {post.authorRole && `(${post.authorRole})`}
+                  Author: {post.author}
                 </p>
                 <p className="mt-1 text-sm text-gray-400">
                   Created: {new Date(post.createdAt).toLocaleDateString()}
